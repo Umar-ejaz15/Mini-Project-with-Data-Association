@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="main w-full h-screen bg-zinc-800 text-white">
+    <div class="topinfo p-5 flex justify-between items-center">
+      <h1 class="text-4xl">hi! <%= user.name %>
+      </h1>
+      <a href="/logout" class="bg-gray-500 px-5 py-1">logout</a>
+    </div>
+    <form action="/posted" method="post" class="p-5 flex flex-col">
+      <h1>Create A post</h1>
+      <textarea class="resize-none outline-none w-96 bg-zinc-700 border border-white p-5" name="content" id="" placeholder="whats on your mind?"></textarea>
+      <button class="px-5 py-1 bg-blue-700 w-40 mt-3">post now</button>
+    </form>
+    <h1 class="ml-10">your posts</h1>
+    <div class="myposts p-5 flex gap-5 flex-wrap">
+      <% user.posts.reverse().forEach((post)=> { %>
+      <div class="post w-96 p-3 bg-zinc-700">
+        <h1>
+          <%= user.name %>
+        </h1>
+        <p>
+          <%= post.content %>
+        </p>
+        <small>
+          <%= post.likes.length %>
+        </small>
+        <div class="interaction flex gap-5">
+          <a class="text-blue-500" href="/like/<%= post._id  %>">
+            <%=  post.likes.indexOf(user._id) === -1 ? "like": "unlike"  %>
+          </a>
+          <a class="bg-red-700 px-5 py-1" href="/edit/<%= post._id  %>">edit</a>
+        </div>
+      </div>
+
+      <% }); %>
+    </div>
+  </div>
+</body>
+
+</html>
